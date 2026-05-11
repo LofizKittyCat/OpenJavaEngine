@@ -1,0 +1,40 @@
+plugins {
+    id 'java-library'
+}
+
+// Change this to 'natives-windows' or 'natives-macos' / 'natives-macos-arm64' as needed.
+def lwjglNatives = "natives-linux"
+
+ext {
+    lwjglVersion  = "3.3.3"
+    jomlVersion   = "1.10.5"
+}
+
+dependencies {
+
+    api platform("org.lwjgl:lwjgl-bom:${lwjglVersion}")
+
+    api "org.lwjgl:lwjgl"
+    api "org.lwjgl:lwjgl-opengl"   // OpenGL bindings
+    api "org.lwjgl:lwjgl-glfw"     // Window / input
+    api "org.lwjgl:lwjgl-openal"   // Audio
+    api "org.lwjgl:lwjgl-stb"      // Image loading, font rasterisation
+    api "org.lwjgl:lwjgl-nanovg"   // 2D vector drawing (UI / debug)
+
+    // Natives
+    runtimeOnly "org.lwjgl:lwjgl::${lwjglNatives}"
+    runtimeOnly "org.lwjgl:lwjgl-opengl::${lwjglNatives}"
+    runtimeOnly "org.lwjgl:lwjgl-glfw::${lwjglNatives}"
+    runtimeOnly "org.lwjgl:lwjgl-openal::${lwjglNatives}"
+    runtimeOnly "org.lwjgl:lwjgl-stb::${lwjglNatives}"
+    runtimeOnly "org.lwjgl:lwjgl-nanovg::${lwjglNatives}"
+
+    api "org.joml:joml:${jomlVersion}"
+
+    implementation "org.tinylog:tinylog-api:2.7.0"
+    runtimeOnly "org.tinylog:tinylog-impl:2.7.0"
+
+    testImplementation "org.junit.jupiter:junit-jupiter:5.10.2"
+    testRuntimeOnly    "org.junit.platform:junit-platform-launcher"
+}
+
